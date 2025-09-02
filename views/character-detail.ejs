@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DB_Strategy</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+
+  <body>
+    <!-- ホームセクション -->
+    <header class="section-header">
+      <a class="header-logo" href="/">あくまデバイス</a>
+      <h1 class="header-title">ゲキシンスクアドラ攻略</h1>
+      <div class="menu">
+        <span
+          >{キャラクター詳細} :
+          <span><%= character.name %></span>
+        </span>
+      </div>
+    </header>
+    <div class="section-body">
+      <div class="serch">
+        <input type="text" class="serch-input" step="any" />
+      </div>
+
+      <div class="container">
+        <a href="/character" class="back-bottan">一覧へ戻る</a>
+        <hr class="detail-bar" />
+        <div class="detail-contents">
+          <div class="detail-header">
+            <h2 class="character-name" id="character-name">
+              <%= character.name %>
+            </h2>
+            <p>ステータス詳細<%= character.role %></p>
+          </div>
+          <div class="skill-contents">
+            <% const passiveSkill = character.skills[0]; const firstSkill =
+            character.skills[1]; const secondSkill = character.skills[2]; const
+            thirdSkill = character.skills[3]; const specialSkill =
+            character.skills[4]; %>
+            <div class="skill-section">
+              <div class="skill-header">
+                <h2>パッシブスキル</h2>
+              </div>
+              <div class="skill-body">
+                <h3 class="skill-name"><%= passiveSkill.name %></h3>
+                <p class="skill-detail"><%= passiveSkill.description %></p>
+                <p class="retio"></p>
+              </div>
+            </div>
+            <div class="skill-section">
+              <div class="skill-header">
+                <h2>技1</h2>
+              </div>
+              <div class="skill-body">
+                <h3 class="skill-name"><%= firstSkill.name %></h3>
+                <p class="skill-detail"><%= firstSkill.description %></p>
+                <p class="retio"></p>
+              </div>
+            </div>
+            <div class="skill-section">
+              <div class="skill-header">
+                <h2>技２</h2>
+              </div>
+              <div class="skill-body">
+                <h3 class="skill-name"><%= secondSkill.name %></h3>
+                <p class="skill-detail"><%= secondSkill.description %></p>
+                <p class="retio"></p>
+              </div>
+            </div>
+            <div class="skill-section">
+              <div class="skill-header">
+                <h2>技3</h2>
+              </div>
+              <div class="skill-body">
+                <h3 class="skill-name"><%= thirdSkill.name %></h3>
+                <p class="skill-detail"><%= thirdSkill.description %></p>
+                <p class="retio"></p>
+              </div>
+            </div>
+            <div class="skill-section">
+              <div class="skill-header">
+                <h2>必殺技</h2>
+              </div>
+              <div class="skill-body">
+                <h3 class="skill-name"><%= specialSkill.name %></h3>
+                <p class="skill-detail"><%= specialSkill.description %></p>
+                <p class="retio"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

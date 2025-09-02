@@ -1,0 +1,7 @@
+# .gitignoreファイルの中身
+
+# Node.jsが自動生成するライブラリ置き場
+node_modules
+
+# 環境変数を書くファイル（もしあれば）
+.env

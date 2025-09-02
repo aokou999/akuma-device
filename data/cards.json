@@ -1,0 +1,130 @@
+[
+  {
+    "id": "denkou",
+    "name": "電光石火",
+    "icon": "images/cards/card_s1_r1.png",
+    "level": "1st",
+    "effect": "バニシングステップ使用後2秒以内に攻撃した敵1人に追加で気功波ダメージを与える。"
+  },
+  {
+    "id": "suno",
+    "name": "超スノーボール",
+    "icon": "images/cards/card_s1_r2.png",
+    "level": "1st",
+    "effect": "敵ヒーローをKOするか、アシストするたび全攻撃力が上昇。最大4回まで上昇し、戦闘不能になると増加分をすべて失う。"
+  },
+  {
+    "id": "birudo",
+    "name": "ビルドアップ",
+    "icon": "images/cards/card_s1_g1.png",
+    "level": "1st",
+    "effect": "敵NPCをKOするか、アシストするたび全防御力が上昇。最大10回"
+  },
+  {
+    "id": "hettya",
+    "name": "へっちゃら！",
+    "icon": "images/cards/card_s1_g2.png",
+    "level": "1st",
+    "effect": "合計HPが最大値の50%以下になるダメージを受けたとき、追加HPを2秒間獲得。"
+  },
+  {
+    "id": "senryaku",
+    "name": "戦略的逃走",
+    "icon": "images/cards/card_s1_b1.png",
+    "level": "1st",
+    "effect": "近くの敵ヒーローに背を向けて移動するとき、移動速度が少し上昇。"
+  },
+  {
+    "id": "gekishin",
+    "name": "ゲキシンズハイ",
+    "icon": "images/cards/card_s1_b2.png",
+    "level": "1st",
+    "effect": "ゲキシンバーストを決めたとき、発動した技のクールダウンを？？短縮。"
+  },
+  {
+    "id": "jaian",
+    "name": "ジャイアントキリング",
+    "icon": "images/cards/card_s2_r1.png",
+    "level": "2nd",
+    "effect": "合計HPが80%以上の敵ヒーローに攻撃したとき、交戦が終わるまで与えるダメージが上昇(??%)"
+  },
+  {
+    "id": "imaraku",
+    "name": "今楽にしてやる",
+    "icon": "images/cards/card_s2_r2.png",
+    "level": "2nd",
+    "effect": "合計HPが50%以下の敵ヒーローに攻撃したとき、交戦が終わるまで与えるダメージが少し上昇(??)。対象が2秒以上耐えている場合、効果量が大幅に上昇"
+  },
+  {
+    "id": "hagane",
+    "name": "鋼の皮膚",
+    "icon": "images/cards/card_s2_g1.png",
+    "level": "2nd",
+    "effect": "敵ヒーローから攻撃を当てられたとき1ヒット毎に固定値でダメージを軽減。"
+  },
+  {
+    "id": "kattin",
+    "name": "カッチンバリア",
+    "icon": "images/cards/card_s2_g2.png",
+    "level": "2nd",
+    "effect": "10秒間敵ヒーローからダメージを受けていないとき、敵からのダメージを大幅に軽減するバリアを獲得。バリアはダメージを受けてから2秒後に壊れる。"
+  },
+  {
+    "id": "utusemi",
+    "name": "空蝉の術",
+    "icon": "images/cards/card_s2_b1.png",
+    "level": "2nd",
+    "effect": "敵ヒーローから行動妨害を受けたとき、4秒間移動速度が大幅アップし、バニシングステップのクールダウンが速くなる。",
+    "cool": 10
+  },
+  {
+    "id": "epikku",
+    "name": "エピックハンター",
+    "icon": "images/cards/card_s2_b2.png",
+    "level": "2nd",
+    "effect": "合計HPが50%以下のボスにダメージを与えたとき、4秒間ボスへのダメージが上昇"
+  },
+  {
+    "id": "kyousen",
+    "name": "凶戦士",
+    "icon": "images/cards/card_s3_r1.png",
+    "level": "3rd",
+    "effect": "敵ヒーロー１体にラッシュ攻撃を連続して3回あてたとき、ラッシュ攻撃のダメージが上昇()。ラッシュ攻撃をやめてから4秒経つと解除。"
+  },
+  {
+    "id": "tsuigeki",
+    "name": "追撃者",
+    "icon": "images/cards/card_s3_r2.png",
+    "level": "3rd",
+    "effect": "敵ヒーロー１体に2秒以内に2つの技を当てたとき、対象に追加の気功波ダメージを与え、7.5秒間対象へ向かうときの移動速度が上昇。",
+    "cool": 7.5
+  },
+  {
+    "id": "syugoten",
+    "name": "守護天使",
+    "icon": "images/cards/card_s3_g1.png",
+    "level": "3rd",
+    "effect": "周囲の味方(守護天使所持者を除く)が敵ヒーローからダメージを受けたとき、ダメージの一部を肩代わりする。肩代わりるダメージは周囲の味方の数に応じて軽減される。"
+  },
+  {
+    "id": "dhifensu",
+    "name": "ディフェンスステップ",
+    "icon": "images/cards/card_s3_g2.png",
+    "level": "3rd",
+    "effect": "バニシングステップ使用後3秒間、敵ヒーローからのダメージを軽減する。"
+  },
+  {
+    "id": "suniku",
+    "name": "スニークアタック",
+    "icon": "images/cards/card_s3_b1.png",
+    "level": "3rd",
+    "effect": "自身が発見されてから3秒以内に敵ヒーローに技(必殺技を除く)を当てたとき、当てた技のクールダウンを？？短縮"
+  },
+  {
+    "id": "genkai",
+    "name": "限界を超えた跳躍",
+    "icon": "images/cards/card_s3_b2.png",
+    "level": "3rd",
+    "effect": "バニシングステップがクールダウン中のとき、次に使用可能になる前に１度だけバニシングステップを追加で発動できる。"
+  }
+]

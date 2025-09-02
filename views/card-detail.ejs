@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DB_Strategy</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+
+  <body>
+    <!-- ホームセクション -->
+    <header class="section-header">
+      <a class="header-logo" href="/">あくまデバイス</a>
+      <h1 class="header-title">ゲキシンスクアドラ攻略</h1>
+      <div class="menu">
+        <span
+          >{カミアワセカード詳細} :
+          <span><%= card.name %></span>
+        </span>
+      </div>
+    </header>
+    <div class="section-body">
+      <div class="serch">
+        <input type="text" class="serch-input" step="any" />
+      </div>
+
+      <div class="container">
+        <a href="/card" class="back-bottan">一覧へ戻る</a>
+        <hr class="detail-bar" />
+        <div class="detail-contents">
+          <div class="detail-header">
+            <h2 class="character-name" id="character-name"><%= card.name %></h2>
+            <p>カードステップ<%= card.level %></p>
+          </div>
+          <div class="skill-contents">
+            <div class="skill-section">
+              <div class="skill-header">
+                <h2>カード効果</h2>
+              </div>
+              <div class="skill-body">
+                <p class="skill-detail"><%= card.effect %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
