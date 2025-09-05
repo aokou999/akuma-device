@@ -336,7 +336,15 @@ body.is-dragging {
   font-weight: 1000;
 }
 .skill-detail {
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 200px;
+  color: #d87d09;
+}
+.skill-time {
+  padding-top: 5%;
+}
+.highlight-text {
+  color: #ade0ee; /* オレンジ色を指定 */
 }
 /* ここまでキャラクター詳細のCSS */
 

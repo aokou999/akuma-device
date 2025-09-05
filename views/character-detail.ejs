@@ -19,10 +19,6 @@
       </div>
     </header>
     <div class="section-body">
-      <div class="serch">
-        <input type="text" class="serch-input" step="any" />
-      </div>
-
       <div class="container">
         <a href="/character" class="back-bottan">一覧へ戻る</a>
         <hr class="detail-bar" />
@@ -38,14 +34,14 @@
             character.skills[1]; const secondSkill = character.skills[2]; const
             thirdSkill = character.skills[3]; const specialSkill =
             character.skills[4]; %>
+
             <div class="skill-section">
               <div class="skill-header">
                 <h2>パッシブスキル</h2>
               </div>
               <div class="skill-body">
                 <h3 class="skill-name"><%= passiveSkill.name %></h3>
-                <p class="skill-detail"><%= passiveSkill.description %></p>
-                <p class="retio"></p>
+                <p class="skill-detail"><%- passiveSkill.description %></p>
               </div>
             </div>
             <div class="skill-section">
@@ -54,8 +50,8 @@
               </div>
               <div class="skill-body">
                 <h3 class="skill-name"><%= firstSkill.name %></h3>
-                <p class="skill-detail"><%= firstSkill.description %></p>
-                <p class="retio"></p>
+                <p class="skill-detail"><%- firstSkill.description %></p>
+                <p class="skill-time">クールタイム：<%= firstSkill.time %></p>
               </div>
             </div>
             <div class="skill-section">
@@ -64,8 +60,8 @@
               </div>
               <div class="skill-body">
                 <h3 class="skill-name"><%= secondSkill.name %></h3>
-                <p class="skill-detail"><%= secondSkill.description %></p>
-                <p class="retio"></p>
+                <p class="skill-detail"><%- secondSkill.description %></p>
+                <p class="skill-time">クールタイム：<%= secondSkill.time %></p>
               </div>
             </div>
             <div class="skill-section">
@@ -74,8 +70,8 @@
               </div>
               <div class="skill-body">
                 <h3 class="skill-name"><%= thirdSkill.name %></h3>
-                <p class="skill-detail"><%= thirdSkill.description %></p>
-                <p class="retio"></p>
+                <p class="skill-detail"><%- thirdSkill.description %></p>
+                <p class="skill-time">クールタイム：<%= thirdSkill.time %></p>
               </div>
             </div>
             <div class="skill-section">
@@ -84,8 +80,8 @@
               </div>
               <div class="skill-body">
                 <h3 class="skill-name"><%= specialSkill.name %></h3>
-                <p class="skill-detail"><%= specialSkill.description %></p>
-                <p class="retio"></p>
+                <p class="skill-detail"><%- specialSkill.description %></p>
+                <p class="skill-time">クールタイム：<%= specialSkill.time %></p>
               </div>
             </div>
           </div>
