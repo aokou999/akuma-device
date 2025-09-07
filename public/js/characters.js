@@ -100,9 +100,9 @@ const characters = [
     url: "/Hit",
   },
   {
-    name: "ダメージ",
-    icon: "images/.png",
-    url: "/Goku",
+    name: "ガンマ1号&ガンマ2号",
+    icon: "images/Ganma.png",
+    url: "/Ganma",
   },
   {
     name: "ダメージ",
