@@ -100,13 +100,13 @@ const characters = [
     class: "draggable",
   },
   {
-    name: "ダメージ",
-    icon: "images/Goku.png",
+    name: "ガンマ1号&ガンマ2号",
+    icon: "images/Ganma.png",
     class: "draggable",
   },
   {
-    name: "ダメージ",
-    icon: "images/Goku.png",
+    name: "ケール",
+    icon: "images/Keru.png",
     class: "draggable",
   },
 ];
