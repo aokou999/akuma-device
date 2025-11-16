@@ -109,6 +109,21 @@ const characters = [
     icon: "images/Keru.png",
     class: "draggable",
   },
+  {
+    name: "超サイヤ人悟空(超サイヤ人3)",
+    icon: "images/Goku-s3.png",
+    class: "draggable",
+  },
+  {
+    name: "ゴテンクス",
+    icon: "images/Gotenkusu.png",
+    class: "draggable",
+  },
+  {
+    name: "トッポ",
+    icon: "images/Toppo.png",
+    class: "draggable",
+  },
 ];
 const characterListContainer = document.getElementById("character-pool");
 
