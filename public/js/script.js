@@ -126,6 +126,10 @@ document.addEventListener("DOMContentLoaded", () => {
     originalNextSibling = null;
   }
 
+  tierListContainer.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+  });
+
   // 同じランク内で画像を移動させるための補助関数
   function getDragAfterElement(container, x) {
     // コンテナ内の、現在ドラッグしているオリジナル要素以外の draggable要素を取得
