@@ -369,14 +369,23 @@ body.is-dragging {
 #map-container {
   position: fixed;
   width: 100vw;
-  height: 100vh;
-  left: 0;
   height: calc(100vh - 200px);
+  left: 0;
+  overflow: hidden;
+  background-color: #333;
+  z-index: 1;
+}
+
+#map-layer {
+  position: absolute;
+  width: 1400px; /* 画像の元の幅 */
+  height: 600px; /* 画像の元の高さ */
   background-image: url("/images/map.png");
   background-size: cover;
-  background-position: center;
-  background-size: cover;
-  z-index: 1;
+
+  /* ★重要: 拡大縮小の基準点を左上に固定する */
+  transform-origin: 0 0;
+  z-index: 3;
 }
 
 img {
