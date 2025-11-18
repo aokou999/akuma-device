@@ -4,6 +4,10 @@ ul {
 .main-content {
   flex: 1;
 }
+
+body {
+  margin: 0; /* body の上下左右のマージンをリセット */
+}
 .section-header {
   background-color: #222;
   padding: 12px;
@@ -363,18 +367,16 @@ body.is-dragging {
 
 /* ここからマップのCSS */
 #map-container {
-  position: relative;
-  width: 1400px;
-  height: 600px;
-  border: 2px solid #333;
-  margin: 0 auto;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  height: calc(100vh - 200px);
   background-image: url("/images/map.png");
   background-size: cover;
-  z-index: 2;
-}
-#map-image {
-  width: 100%;
-  height: 100%;
+  background-position: center;
+  background-size: cover;
+  z-index: 1;
 }
 
 img {
