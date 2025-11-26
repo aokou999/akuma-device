@@ -124,6 +124,16 @@ const characters = [
     icon: "images/Toppo.png",
     class: "draggable",
   },
+  {
+    name: "トッポ",
+    icon: "images/Toppo.png",
+    class: "draggable",
+  },
+  {
+    name: "ベジータ(超サイヤ人4)",
+    icon: "images/Vegeta4.png",
+    class: "draggable",
+  },
 ];
 const characterListContainer = document.getElementById("character-pool");
 

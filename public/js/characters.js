@@ -124,6 +124,11 @@ const characters = [
     icon: "images/Toppo.png",
     url: "/Toppo",
   },
+  {
+    name: "ベジータ(超サイヤ人4)",
+    icon: "images/Vegeta4.png",
+    url: "/Vegeta4",
+  },
 ];
 
 const characterListContainer = document.getElementById("character-list");
