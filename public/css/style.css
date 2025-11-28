@@ -366,6 +366,79 @@ body.is-dragging {
 /* ここまでキャラクター詳細のCSS */
 
 /* ここからマップのCSS */
+
+/* ★追加: サイドバーのスタイル */
+#sidebar {
+  position: fixed;
+  top: 70px; /* ヘッダーの高さ分空ける */
+  right: 0;
+  width: 250px;
+  height: calc(100vh - 70px);
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000; /* マップより手前に表示 */
+  transition: transform 0.3s ease; /* 開閉アニメーション */
+  display: flex;
+  flex-direction: column;
+}
+
+/* サイドバーが閉じているときのクラス */
+#sidebar.closed {
+  transform: translateX(250px); /* 幅の分だけ右に隠す */
+}
+
+/* 開閉ボタン */
+#sidebar-toggle {
+  position: absolute;
+  left: -40px;
+  top: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  border-radius: 5px 0 0 5px;
+  font-weight: bold;
+}
+
+.sidebar-content {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* サイドバー内の画像リスト */
+.character-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sidebar-item {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  cursor: grab;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+.sidebar-item:hover {
+  border-color: #007bff;
+}
+
+/* 配置後のアイコン（既存CSSの調整） */
+.draggable-icon {
+  position: absolute;
+  width: 50px; /* 必要に応じて調整 */
+  height: 50px;
+  cursor: grab;
+  /* 画像を表示するためのスタイル */
+  background-size: cover;
+  background-position: center;
+}
+
 #map-container {
   position: fixed;
   width: 100vw;
