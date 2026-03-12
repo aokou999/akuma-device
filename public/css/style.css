@@ -38,6 +38,7 @@ body {
   min-height: 800px;
   color: #ccc;
   z-index: 1;
+  flex: 0;
 }
 
 .serch {
@@ -225,6 +226,7 @@ a.btn-link {
 /* ドラッグ可能なキャラクター画像のスタイル */
 .draggable {
   width: 100px;
+
   height: 100px;
   cursor: pointer;
 }
@@ -326,7 +328,6 @@ body.is-dragging {
 .skill-section {
   flex: 1;
   border: 1px solid #222;
-  background-color: rgb(10, 10, 10);
 }
 .skill-header {
   background-color: #222;
@@ -337,126 +338,76 @@ body.is-dragging {
   margin: 0;
 }
 .skill-name {
-  color: #d87d09;
-
+  color: #ade0ee;
   font-weight: 1000;
-  margin-top: 5%;
-  margin-bottom: 2%;
 }
 .skill-detail {
-  font-size: 17px;
-  font-weight: 700;
-  /* color: rgba(255, 255, 255, 0.7); */
+  font-size: 18px;
+  font-weight: 200px;
   color: #d87d09;
-  padding-top: 0;
-  margin-top: 0;
 }
-
 .skill-time {
-  margin-top: -2%;
-  padding-bottom: 0;
-  margin-bottom: 0;
+  padding-top: 5%;
 }
 .highlight-text {
   color: #ade0ee; /* オレンジ色を指定 */
 }
-.buff {
-  color: #4caf50;
-}
 /* ここまでキャラクター詳細のCSS */
 
-/* ここからマップのCSS */
+/* **********************************************************************************
+   ==================================================================================
+   ==================================================================================
+   ==================================================================================
+   ここからマップのCSS
+   ==================================================================================
+   ==================================================================================
+   ==================================================================================
+   ********************************************************************************** */
 
-/* ★追加: サイドバーのスタイル */
-#sidebar {
-  position: fixed;
-  top: 70px; /* ヘッダーの高さ分空ける */
-  right: 0;
-  width: 250px;
-  height: calc(100vh - 70px);
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
-  z-index: 1000; /* マップより手前に表示 */
-  transition: transform 0.3s ease; /* 開閉アニメーション */
-  display: flex;
-  flex-direction: column;
+/* =========================================
+   1. 色・変数の定義 (ここで色を一括変更できます)
+   ========================================= */
+:root {
+  /* --- ヘッダーの高さ --- */
+  --header-height: 70px;
+
+  /* --- 右サイドバー (Right) のテーマ: 白ベース --- */
+  --bg-right: rgba(255, 84, 41, 0.7);
+  --accent-right: red; /* 青 */
+
+  /* --- 左サイドバー (Left) のテーマ: 黒ベース --- */
+  --bg-left: rgba(0, 140, 255, 0.7);
+  --accent-left: blue; /* 黄 */
+
+  /* --- 下サイドバー (Bottom) のテーマ: グレーベース --- */
+  --bg-bottom: rgba(240, 240, 240, 0.95);
+  --accent-bottom: #4caf50; /* 緑 */
+
+  /* --- 共通: 開閉ボタンの色 --- */
+  --toggle-bg: #333;
+  --toggle-text: #fff;
 }
 
-/* サイドバーが閉じているときのクラス */
-#sidebar.closed {
-  transform: translateX(250px); /* 幅の分だけ右に隠す */
-}
-
-/* 開閉ボタン */
-#sidebar-toggle {
-  position: absolute;
-  left: -40px;
-  top: 10px;
-  width: 40px;
-  height: 40px;
-  background-color: #333;
-  color: white;
-  text-align: center;
-  line-height: 40px;
-  cursor: pointer;
-  border-radius: 5px 0 0 5px;
-  font-weight: bold;
-}
-
-.sidebar-content {
-  padding: 20px;
-  overflow-y: auto;
-}
-
-/* サイドバー内の画像リスト */
-.character-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.sidebar-item {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  cursor: grab;
-  border: 1px solid #ccc;
-  background: white;
-}
-
-.sidebar-item:hover {
-  border-color: #007bff;
-}
-
-/* 配置後のアイコン（既存CSSの調整） */
-.draggable-icon {
-  position: absolute;
-  width: 50px; /* 必要に応じて調整 */
-  height: 50px;
-  cursor: grab;
-  /* 画像を表示するためのスタイル */
-  background-size: cover;
-  background-position: center;
-}
-
+/* =========================================
+   2. マップエリア (Map Area)
+   ========================================= */
 #map-container {
   position: fixed;
-  width: 100vw;
-  height: calc(100vh - 200px);
   left: 0;
-  overflow: hidden;
+  width: 100vw;
+  height: calc(100vh - 70px);
   background-color: #333;
+  overflow: hidden;
   z-index: 1;
+  flex: 1;
 }
 
 #map-layer {
   position: absolute;
-  width: 1400px; /* 画像の元の幅 */
-  height: 600px; /* 画像の元の高さ */
+  width: 1400px;
+  height: 700px;
   background-image: url("/images/map.png");
   background-size: cover;
-
-  /* ★重要: 拡大縮小の基準点を左上に固定する */
   transform-origin: 0 0;
   z-index: 3;
 }
@@ -464,60 +415,182 @@ body.is-dragging {
 img {
   user-select: none;
 }
-
+/* マップ上のアイコン (ドロップ後) 
+   共通スタイルと、サイドバーごとの色分け
+*/
 .draggable-icon {
-  /* 親要素を基準に絶対位置で配置 */
   position: absolute;
-  /* アイコンの見た目 */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* 丸く切り抜く */
+  cursor: grab;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  border: 5px solid #fff; /* デフォルトの枠線 */
+  background-size: cover;
+  background-position: center;
+}
+
+/* ★ここが重要: どのサイドバーから来たかで枠色を変える */
+.draggable-icon.from-right {
+  border-color: var(--accent-right);
+}
+.draggable-icon.from-left {
+  border-color: var(--accent-left);
+}
+.draggable-icon.from-bottom {
+  border-color: var(--accent-bottom);
+}
+
+/* =========================================
+   3. サイドバー共通設定 (Sidebar Common)
+   ========================================= */
+/* すべてのサイドバーに共通するスタイル */
+.sidebar-panel {
+  position: fixed;
+  z-index: 1000; /* マップより上 */
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* すべてのサイドバー内の画像アイテム */
+.sidebar-item {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  cursor: grab;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: all 0.2s;
+}
+
+/* コンテンツ領域（スクロール用） */
+.sidebar-content {
+  padding: 15px;
+  overflow: auto;
+  flex: 1;
+}
+
+/* 画像リストの並び方 */
+.character-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* 開閉ボタンの共通スタイル */
+.sidebar-toggle-btn {
+  position: absolute;
+  background-color: var(--toggle-bg);
+  color: var(--toggle-text);
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex; /* 文字を中央揃え */
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================================
+   4. 各サイドバー固有の設定 (Specific Layout)
+   ========================================= */
+
+/* --- 右サイドバー (Right) --- */
+#sidebar-right {
+  top: var(--header-height);
+  right: 0;
+  width: 270px;
+  height: calc(100vh - var(--header-height));
+  background-color: var(--bg-right);
+}
+#sidebar-right.closed {
+  transform: translateX(270px);
+}
+
+/* 右サイドバー内のアイテム装飾 */
+#sidebar-right .sidebar-item {
+  border-color: #ccc;
+}
+#sidebar-right .sidebar-item:hover {
+  border-color: var(--accent-right);
+  box-shadow: 0 0 8px var(--accent-right);
+}
+
+/* 右サイドバーのボタン */
+#sidebar-right-toggle {
+  top: 10px;
+  left: -40px;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  cursor: grab; /* マウスカーソルを掴む形に */
-  border: 2px solid rgb(0, 0, 0);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 5px 0 0 5px;
 }
 
-#my-icon1 {
-  top: 130px; /* 初期位置 Y */
-  left: 145px; /* 初期位置 X */
-  background-color: rgb(255, 0, 0);
+/* --- 左サイドバー (Left) --- */
+#sidebar-left {
+  top: var(--header-height);
+  left: 0;
+  width: 270px;
+  height: calc(100vh - var(--header-height));
+  background-color: var(--bg-left);
+  color: #fff; /* 文字色を白に */
+}
+#sidebar-left.closed {
+  transform: translateX(-270px);
 }
 
-#my-icon2 {
-  top: 150px; /* 初期位置 Y */
-  left: 100px; /* 初期位置 X */
-  background-color: rgb(255, 0, 0);
+/* 左サイドバー内のアイテム装飾 */
+#sidebar-left .sidebar-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
 }
-#my-icon3 {
-  top: 200px; /* 初期位置 Y */
-  left: 70px; /* 初期位置 X */
-  background-color: rgb(90, 255, 25);
+#sidebar-left .sidebar-item:hover {
+  border-color: var(--accent-left);
+  box-shadow: 0 0 8px var(--accent-left);
 }
-#my-icon4 {
-  top: 250px; /* 初期位置 Y */
-  left: 80px; /* 初期位置 X */
-  background-color: rgb(30, 120, 250);
+
+/* 左サイドバーのボタン */
+#sidebar-left-toggle {
+  top: 10px;
+  right: -36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 0 5px 5px 0;
 }
-#my-icon5 {
-  top: 130px; /* 初期位置 Y */
-  left: 1230px; /* 初期位置 X */
-  background-color: rgb(255, 0, 0);
+
+/* --- 下サイドバー (Bottom) --- */
+#sidebar-bottom {
+  left: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 140px;
+  background-color: var(--bg-bottom);
 }
-#my-icon6 {
-  top: 150px; /* 初期位置 Y */
-  left: 1270px; /* 初期位置 X */
-  background-color: rgb(255, 0, 0);
+#sidebar-bottom.closed {
+  transform: translateY(140px);
 }
-#my-icon7 {
-  top: 200px; /* 初期位置 Y */
-  left: 1300px; /* 初期位置 X */
-  background-color: rgb(90, 255, 25);
+
+/* 下サイドバー内のアイテム装飾 */
+#sidebar-bottom .sidebar-item {
+  width: 80px; /* 下だけ少し大きく */
+  height: 80px;
+  border-color: rgba(0, 0, 0, 0.1);
 }
-#my-icon8 {
-  top: 250px; /* 初期位置 Y */
-  left: 1290px; /* 初期位置 X */
-  background-color: rgb(30, 120, 250);
+#sidebar-bottom .sidebar-item:hover {
+  border-color: var(--accent-bottom);
+  box-shadow: 0 0 8px var(--accent-bottom);
 }
+
+/* 下サイドバーのボタン */
+#sidebar-bottom-toggle {
+  top: -30px;
+  right: 20px;
+  width: 50px;
+  height: 30px;
+  border-radius: 5px 5px 0 0;
+}
+
 .img-tag {
   background-image: url("/images/damage.png");
   height: 30px;

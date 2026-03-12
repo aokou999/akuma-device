@@ -14,52 +14,33 @@
         <span>{Map}</span>
       </div>
     </header>
-    </header>
     <div class="section-body">
-      <!-- <div class="serch">
-        <input type="text" class="serch-input" step="any" />
-      </div> -->
-      <div class="container">
         <div id="map-container">
-          <div id="map-layer">
+          <div id="map-layer"></div>
+        </div>
+
+        <div id="sidebar-right" class="sidebar-panel"> 
+          <div id="sidebar-right-toggle" class="sidebar-toggle-btn">▶</div>
+          <div class="sidebar-content">
+            <h3>Right Chars</h3>
+            <div class="character-list" id="Rcharacter-list"></div>
           </div>
         </div>
 
-        <div id="sidebar">
-          <div id="sidebar-toggle">◀</div>
+        <div id="sidebar-left" class="sidebar-panel">
+          <div id="sidebar-left-toggle" class="sidebar-toggle-btn">◀</div>
           <div class="sidebar-content">
-            <h3>Characters</h3>
-            <div class="character-list">
-              <img src="/images/Goku.png" class="sidebar-item" data-src="/images/Goku.png" alt="Char 1">
-              <img src="/images/Vegeta.png" class="sidebar-item" data-src="/images/Vegeta.png" alt="Char 2">
-              <img src="/images/Krillin.png" class="sidebar-item" data-src="/images/Krillin.png" alt="Char 3">
-              <img src="/images/Trunks.png" class="sidebar-item" data-src="/images/Trunks.png" alt="Char 4">
-              <img src="/images/Piccolo.png" class="sidebar-item" data-src="/images/Piccolo.png" alt="Char 5">
-              <img src="/images/Android-18.png" class="sidebar-item" data-src="/images/Android-18.png" alt="Char 6">
-              <img src="/images/Majin-Boo.png" class="sidebar-item" data-src="/images/Majin-Boo.png" alt="Char 7">
-              <img src="/images/Zamasu.png" class="sidebar-item" data-src="/images/Zamasu.png" alt="Char 8">
-              <img src="/images/Gohan.png" class="sidebar-item" data-src="/images/Gohan.png" alt="Char 9">
-              <img src="/images/Baby-boy.png" class="sidebar-item" data-src="/images/Baby-boy.png" alt="Char 10">
-              <img src="/images/Frieza-first.png" class="sidebar-item" data-src="/images/Frieza-first.png" alt="Char 11">
-              <img src="/images/Dabura.png" class="sidebar-item" data-src="/images/Dabura.png" alt="Char 12">
-              <img src="/images/Cooler-final.png" class="sidebar-item" data-src="/images/Cooler-final.png" alt="Char 13">
-              <img src="/images/Super-Uub.png" class="sidebar-item" data-src="/images/Super-Uub.png" alt="Char 14">
-              <img src="/images/BoJack-full.png" class="sidebar-item" data-src="/images/BoJack-full.png" alt="Char 15">
-              <img src="/images/Caulifla-s2.png" class="sidebar-item" data-src="/images/Caulifla-s2.png" alt="Char 16">
-              <img src="/images/Goku-mini.png" class="sidebar-item" data-src="/images/Goku-mini.png" alt="Char 17">
-              <img src="/images/Cell-perfect.png" class="sidebar-item" data-src="/images/Cell-perfect.png" alt="Char 18">
-              <img src="/images/Android-17.png" class="sidebar-item" data-src="/images/Android-17.png" alt="Char 19">
-              <img src="/images/Hit.png" class="sidebar-item" data-src="/images/Hit.png" alt="Char 20">
-              <img src="/images/Ganma.png" class="sidebar-item" data-src="/images/Ganma.png" alt="Char 21">
-              <img src="/images/Keru.png" class="sidebar-item" data-src="/images/Keru.png" alt="Char 22">
-              <img src="/images/Goku-s3.png" class="sidebar-item" data-src="/images/Goku-s3.png" alt="Char 23">
-              <img src="/images/Gotenkusu.png" class="sidebar-item" data-src="/images/Gotenkusu.png" alt="Char 24">
-              <img src="/images/Toppo.png" class="sidebar-item" data-src="/images/Toppo.png" alt="Char 25">
-              <img src="/images/Vegeta4.png" class="sidebar-item" data-src="/images/Vegeta4.png" alt="Char 26">
-            </div>
+            <h3>Left Chars</h3>
+            <div class="character-list" id="Lcharacter-list"></div>
           </div>
         </div>
-      </div>
+
+        <div id="sidebar-bottom" class="sidebar-panel">
+          <div id="sidebar-bottom-toggle" class="sidebar-toggle-btn">▼</div>
+          <div class="sidebar-content">
+            <div class="character-list" id="Bcharacter-list"></div>
+          </div>
+        </div>
     </div>
     <script src="js/map_script.js"></script>
   </body>

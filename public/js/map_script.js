@@ -1,12 +1,83 @@
 const mapContainer = document.getElementById("map-container");
 const mapLayer = document.getElementById("map-layer");
-// 既存のアイコンがある場合は取得（動的に追加されるため、この変数はあまり使わなくなります）
-const existingIcons = document.querySelectorAll(".draggable-icon");
+
+// ★修正ポイント2: 拡大縮小の基準点を左上(0, 0)に固定（ズーム時のズレや座標バグを解消）
+mapLayer.style.transformOrigin = "0 0";
+
+// ==========================================
+// 0. キャラクターリストの定義と生成
+// ==========================================
+
+// 画像ファイル名のリスト (拡張子を含む)
+const charFiles = [
+  "Goku.png",
+  "Vegeta.png",
+  "Krillin.png",
+  "Trunks.png",
+  "Piccolo.png",
+  "Android-18.png",
+  "Majin-Boo.png",
+  "Zamasu.png",
+  "Gohan.png",
+  "Baby-boy.png",
+  "Frieza-first.png",
+  "Dabura.png",
+  "Cooler-final.png",
+  "Super-Uub.png",
+  "BoJack-full.png",
+  "Caulifla-s2.png",
+  "Goku-mini.png",
+  "Cell-perfect.png",
+  "Android-17.png",
+  "Hit.png",
+  "Ganma.png",
+  "Keru.png",
+  "Goku-s3.png",
+  "Gotenkusu.png",
+  "Toppo.png",
+  "Vegeta4.png",
+  "UltimateGohan.png",
+  "Burori.png",
+  "Bezitto.png",
+  "Badaku.png",
+  "Kefura.png",
+];
+
+const RcharListContainer = document.getElementById("Rcharacter-list");
+const LcharListContainer = document.getElementById("Lcharacter-list");
+
+// リストをもとに画像を生成して配置
+charFiles.forEach((fileName, index) => {
+  const Rimg = document.createElement("img");
+  const Limg = document.createElement("img");
+
+  Rimg.src = `/images/${fileName}`;
+  Limg.src = `/images/${fileName}`;
+
+  Rimg.className = "Rsidebar-item sidebar-item";
+  Limg.className = "Lsidebar-item sidebar-item";
+
+  Rimg.dataset.src = `/images/${fileName}`;
+  Limg.dataset.src = `/images/${fileName}`;
+
+  Rimg.alt = `RChar ${index + 1}`;
+  Limg.alt = `LChar ${index + 1}`;
+
+  if (RcharListContainer) RcharListContainer.appendChild(Rimg);
+  if (LcharListContainer) LcharListContainer.appendChild(Limg);
+});
 
 // サイドバー関連の要素
-const sidebar = document.getElementById("sidebar");
-const sidebarToggle = document.getElementById("sidebar-toggle");
-const sidebarItems = document.querySelectorAll(".sidebar-item");
+const sidebar = document.getElementById("sidebar-right");
+const sidebarToggle = document.getElementById("sidebar-right-toggle");
+const sidebarLeft = document.getElementById("sidebar-left");
+const sidebarLeftToggle = document.getElementById("sidebar-left-toggle");
+const sidebarBottom = document.getElementById("sidebar-bottom");
+const sidebarBottomToggle = document.getElementById("sidebar-bottom-toggle");
+
+// ==========================================
+// 1. マップの状態管理変数
+// ==========================================
 
 // 状態管理変数
 let scale = 1.0;
@@ -20,6 +91,7 @@ const ZOOM_SPEED = 0.1;
 
 // ドラッグ状態管理
 let activeIcon = null;
+let isNewIcon = false; // ★修正ポイント1: 変数の宣言を追加（エラー防止）
 let startX = 0;
 let startY = 0;
 let initialIconLeft = 0;
@@ -33,125 +105,103 @@ let initialMapTransX = 0;
 let initialMapTransY = 0;
 
 // ==========================================
-// 1. 初期化処理
+// 2. サイドバーの開閉処理
+// ==========================================
+function setupSidebar(sidebarId, toggleId, closedText, openedText) {
+  const sidebar = document.getElementById(sidebarId);
+  const toggle = document.getElementById(toggleId);
+
+  if (sidebar && toggle) {
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      sidebar.classList.toggle("closed");
+      toggle.textContent = sidebar.classList.contains("closed")
+        ? closedText
+        : openedText;
+    });
+
+    sidebar.addEventListener("mousedown", (e) => e.stopPropagation());
+    sidebar.addEventListener("wheel", (e) => e.stopPropagation());
+  }
+}
+
+setupSidebar("sidebar-right", "sidebar-right-toggle", "◀", "▶");
+setupSidebar("sidebar-left", "sidebar-left-toggle", "▶", "◀");
+setupSidebar("sidebar-bottom", "sidebar-bottom-toggle", "▲", "▼");
+
+// ==========================================
+// 3. アイコン操作 (ドラッグ＆ドロップ)
 // ==========================================
 
-// 既存のアイコンがあればイベントを付与
-existingIcons.forEach((icon) => attachIconEvents(icon));
+// --- A. サイドバーからのドラッグ開始 ---
+document.querySelectorAll(".sidebar-item").forEach((item) => {
+  item.addEventListener("mousedown", (e) => {
+    if (e.button !== 0) return; // 左クリックのみ
+    e.preventDefault();
+    e.stopPropagation();
 
-// サイドバーの開閉トグル
-sidebarToggle.addEventListener("click", () => {
-  sidebar.classList.toggle("closed");
-  // ボタンの文字を切り替え
-  sidebarToggle.textContent = sidebar.classList.contains("closed") ? "◀" : "▶";
+    const imgSrc = item.dataset.src;
+
+    const newIcon = document.createElement("div");
+    newIcon.classList.add("draggable-icon");
+    if (item.closest("#sidebar-right")) {
+      newIcon.classList.add("from-right");
+    } else if (item.closest("#sidebar-left")) {
+      newIcon.classList.add("from-left");
+    } else if (item.closest("#sidebar-bottom")) {
+      newIcon.classList.add("from-bottom");
+    }
+    newIcon.style.backgroundImage = `url(${imgSrc})`;
+    newIcon.style.position = "fixed";
+    newIcon.style.zIndex = "9999";
+    newIcon.style.width = "50px";
+    newIcon.style.height = "50px";
+    newIcon.style.pointerEvents = "none";
+
+    document.body.appendChild(newIcon);
+
+    // 中心合わせ
+    newIcon.style.left = `${e.clientX - 25}px`;
+    newIcon.style.top = `${e.clientY - 25}px`;
+
+    // 状態セット
+    activeIcon = newIcon;
+    isNewIcon = true;
+    startX = e.clientX;
+    startY = e.clientY;
+
+    // 初期位置 (画面座標)
+    initialIconLeft = e.clientX - 25;
+    initialIconTop = e.clientY - 25;
+  });
 });
 
-// サイドバー自体へのクリックがマップに伝播しないようにする
-sidebar.addEventListener("mousedown", (e) => e.stopPropagation());
-sidebar.addEventListener("wheel", (e) => e.stopPropagation());
-
-// ==========================================
-// 2. アイコン生成とイベント付与関数 (重要)
-// ==========================================
-
-/**
- * アイコンに左ドラッグ移動・右クリック削除のイベントを付与する
- */
-function attachIconEvents(icon) {
-  // --- A. 左クリックでドラッグ開始 ---
+// --- B. マップ上のアイコンにイベント付与 ---
+function attachMapIconEvents(icon) {
   icon.addEventListener("mousedown", (e) => {
     if (e.button === 0) {
-      // 左クリックのみ
-      e.stopPropagation(); // マップのパンニングを防ぐ
-
+      e.stopPropagation();
       activeIcon = icon;
+      isNewIcon = false; // 既存アイコン
       activeIcon.style.cursor = "grabbing";
       activeIcon.style.zIndex = "1000";
 
       startX = e.clientX;
       startY = e.clientY;
 
-      // 現在の位置を取得
-      initialIconLeft = parseFloat(
-        activeIcon.style.left || activeIcon.offsetLeft
-      );
-      initialIconTop = parseFloat(activeIcon.style.top || activeIcon.offsetTop);
+      initialIconLeft = parseFloat(icon.style.left);
+      initialIconTop = parseFloat(icon.style.top);
     }
   });
 
-  // --- B. 右クリックで削除 ---
   icon.addEventListener("contextmenu", (e) => {
-    e.preventDefault(); // ブラウザのメニューを出さない
-    e.stopPropagation(); // マップへの伝播を防ぐ
-
-    // 削除確認（誤操作防止のため入れていますが、不要なら削除してください）
-    if (confirm("このアイコンを削除しますか？")) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (confirm("削除しますか？")) {
       icon.remove();
-
-      // もしドラッグ中のアイコンを消した場合は状態をリセット
-      if (activeIcon === icon) activeIcon = null;
     }
   });
 }
-
-// ==========================================
-// 3. サイドバーからのドラッグ＆ドロップ実装
-// ==========================================
-
-sidebarItems.forEach((item) => {
-  item.addEventListener("mousedown", (e) => {
-    if (e.button !== 0) return; // 左クリックのみ
-    e.preventDefault(); // 画像自体のブラウザドラッグ動作をキャンセル
-    e.stopPropagation();
-
-    // 1. 画像ソースを取得
-    const imgSrc = item.dataset.src;
-
-    // 2. 新しいアイコン要素を作成
-    const newIcon = document.createElement("div");
-    newIcon.classList.add("draggable-icon");
-    newIcon.style.backgroundImage = `url(${imgSrc})`;
-
-    // マップレイヤーに追加
-    mapLayer.appendChild(newIcon);
-
-    // 3. アイコンの初期位置を計算
-    // マウスカーソルの位置にアイコンの中心が来るように配置する
-
-    // マップコンテナの現在の位置・スケールを考慮して、マップレイヤー内での座標を計算
-    // 式: (画面上のマウス位置 - コンテナの左上 - マップの移動量) / スケール
-    const containerRect = mapContainer.getBoundingClientRect();
-
-    // アイコンのサイズ（CSSで定義済みと仮定、あるいは動的取得）
-    const iconWidth = 50;
-    const iconHeight = 50;
-
-    // マップ内部座標系でのマウス位置
-    const mouseXOnMap = (e.clientX - containerRect.left - translateX) / scale;
-    const mouseYOnMap = (e.clientY - containerRect.top - translateY) / scale;
-
-    // アイコンの中心をマウス位置に合わせる
-    const initLeft = mouseXOnMap - iconWidth / 2;
-    const initTop = mouseYOnMap - iconHeight / 2;
-
-    newIcon.style.left = `${initLeft}px`;
-    newIcon.style.top = `${initTop}px`;
-
-    // 4. イベントリスナーを付与（移動・削除機能を追加）
-    attachIconEvents(newIcon);
-
-    // 5. そのままドラッグ状態に移行させる
-    // これにより、クリックして生成した瞬間からスムーズに動かせます
-    activeIcon = newIcon;
-    activeIcon.style.cursor = "grabbing";
-    activeIcon.style.zIndex = "1000";
-
-    startX = e.clientX;
-    startY = e.clientY;
-    initialIconLeft = initLeft;
-    initialIconTop = initTop;
-  });
-});
 
 // ==========================================
 // 4. マウス移動処理 (共通)
@@ -163,13 +213,17 @@ document.addEventListener("mousemove", (e) => {
     const deltaX = e.clientX - startX;
     const deltaY = e.clientY - startY;
 
-    // スケールを考慮して移動量を計算
-    let newLeft = initialIconLeft + deltaX / scale;
-    let newTop = initialIconTop + deltaY / scale;
-
-    activeIcon.style.left = `${newLeft}px`;
-    activeIcon.style.top = `${newTop}px`;
-    return; // アイコン移動中はマップ移動などの処理をしない
+    // ★修正ポイント3: 新規アイコンと既存アイコンで移動量の計算を分ける
+    if (isNewIcon) {
+      // サイドバーから出したばかりのアイコンは画面基準なのでスケールを無視する
+      activeIcon.style.left = `${initialIconLeft + deltaX}px`;
+      activeIcon.style.top = `${initialIconTop + deltaY}px`;
+    } else {
+      // マップ上のアイコンはマップ基準なのでスケールで割って移動量を調整する
+      activeIcon.style.left = `${initialIconLeft + deltaX / scale}px`;
+      activeIcon.style.top = `${initialIconTop + deltaY / scale}px`;
+    }
+    return;
   }
 
   // --- マップのパンニング (右クリックドラッグ) ---
@@ -186,13 +240,42 @@ document.addEventListener("mousemove", (e) => {
 });
 
 // ==========================================
-// 5. マウスアップ処理 (共通)
+// 5. マウスアップ (ドロップ処理)
 // ==========================================
-document.addEventListener("mouseup", () => {
+document.addEventListener("mouseup", (e) => {
   if (activeIcon) {
-    activeIcon.style.cursor = "grab";
-    activeIcon.style.zIndex = "";
+    // --- 新規アイコンのドロップ処理 ---
+    if (isNewIcon) {
+      const containerRect = mapContainer.getBoundingClientRect();
+      const isInMap =
+        e.clientX >= containerRect.left &&
+        e.clientX <= containerRect.right &&
+        e.clientY >= containerRect.top &&
+        e.clientY <= containerRect.bottom;
+
+      if (isInMap) {
+        // 画面座標 → マップ内座標 への変換
+        const mapX = (e.clientX - containerRect.left - translateX) / scale;
+        const mapY = (e.clientY - containerRect.top - translateY) / scale;
+
+        activeIcon.style.position = "absolute";
+        activeIcon.style.zIndex = "";
+        activeIcon.style.pointerEvents = "auto";
+        activeIcon.style.left = `${mapX - 25}px`;
+        activeIcon.style.top = `${mapY - 25}px`;
+
+        mapLayer.appendChild(activeIcon);
+        attachMapIconEvents(activeIcon);
+      } else {
+        activeIcon.remove();
+      }
+    } else {
+      // --- 既存アイコンのドラッグ終了 ---
+      activeIcon.style.cursor = "grab";
+      activeIcon.style.zIndex = "";
+    }
     activeIcon = null;
+    isNewIcon = false;
   }
 
   if (isMapPanning) {
@@ -202,41 +285,38 @@ document.addEventListener("mouseup", () => {
 });
 
 // ==========================================
-// 6. その他のマップ機能 (ズーム・パンニング)
+// 6. ズーム & パン機能
 // ==========================================
-
 function updateTransform() {
   mapLayer.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
 }
 
 // ズーム処理
-mapContainer.addEventListener("wheel", (e) => {
-  e.preventDefault();
-  const rect = mapLayer.getBoundingClientRect();
-  const mouseXOnMap = (e.clientX - rect.left) / scale;
-  const mouseYOnMap = (e.clientY - rect.top) / scale;
+mapContainer.addEventListener(
+  "wheel",
+  (e) => {
+    e.preventDefault();
 
-  let newScale = scale + (e.deltaY < 0 ? ZOOM_SPEED : -ZOOM_SPEED);
-  newScale = Math.min(Math.max(newScale, MIN_SCALE), MAX_SCALE);
+    const rect = mapContainer.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
 
-  const containerMouseX = e.clientX - mapContainer.getBoundingClientRect().left;
-  const containerMouseY = e.clientY - mapContainer.getBoundingClientRect().top;
+    const targetX = (mouseX - translateX) / scale;
+    const targetY = (mouseY - translateY) / scale;
 
-  translateX = containerMouseX - mouseXOnMap * newScale;
-  translateY = containerMouseY - mouseYOnMap * newScale;
+    let newScale = scale + (e.deltaY < 0 ? ZOOM_SPEED : -ZOOM_SPEED);
+    newScale = Math.min(Math.max(newScale, MIN_SCALE), MAX_SCALE);
 
-  scale = newScale;
-  updateTransform();
+    translateX = mouseX - targetX * newScale;
+    translateY = mouseY - targetY * newScale;
 
-  // アイコンサイズの逆補正（必要であれば）
+    scale = newScale;
+    updateTransform();
+  },
+  { passive: false },
+);
 
-  const iconScale = 1 / scale;
-  document.querySelectorAll(".draggable-icon").forEach((icon) => {
-    icon.style.transform = `scale(${iconScale})`;
-  });
-});
-
-// マップの右クリックパンニング開始
+// パンニング開始 (右クリック)
 mapContainer.addEventListener("mousedown", (e) => {
   if (e.button === 2) {
     isMapPanning = true;
@@ -248,5 +328,5 @@ mapContainer.addEventListener("mousedown", (e) => {
   }
 });
 
-// コンテキストメニュー無効化 (マップ全体)
+// コンテキストメニュー無効化
 mapContainer.addEventListener("contextmenu", (e) => e.preventDefault());
