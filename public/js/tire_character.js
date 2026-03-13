@@ -125,13 +125,33 @@ const characters = [
     class: "draggable",
   },
   {
-    name: "トッポ",
-    icon: "images/Toppo.png",
+    name: "ベジータ(超サイヤ人4)",
+    icon: "images/Vegeta4.png",
     class: "draggable",
   },
   {
-    name: "ベジータ(超サイヤ人4)",
-    icon: "images/Vegeta4.png",
+    name: "アルティメット孫悟飯",
+    icon: "images/UltimateGohan.png",
+    class: "draggable",
+  },
+  {
+    name: "ブロリー",
+    icon: "images/Burori.png",
+    class: "draggable",
+  },
+  {
+    name: "ベジット",
+    icon: "images/Bezitto.png",
+    class: "draggable",
+  },
+  {
+    name: "バーダック",
+    icon: "images/Badaku.png",
+    class: "draggable",
+  },
+  {
+    name: "ケフラ",
+    icon: "images/Kefura.png",
     class: "draggable",
   },
 ];

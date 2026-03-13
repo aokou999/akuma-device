@@ -43,8 +43,18 @@ const charFiles = [
   "Kefura.png",
 ];
 
+// 下バーアイコン画像のリスト
+const objectFiles = [
+  "Zenou.png",
+  "Object-16.png",
+  "Object-jako.png",
+  "Object-nappa.png",
+  "Object-rib.png",
+];
+
 const RcharListContainer = document.getElementById("Rcharacter-list");
 const LcharListContainer = document.getElementById("Lcharacter-list");
+const BcharListContainer = document.getElementById("Bcharacter-list");
 
 // リストをもとに画像を生成して配置
 charFiles.forEach((fileName, index) => {
@@ -65,6 +75,15 @@ charFiles.forEach((fileName, index) => {
 
   if (RcharListContainer) RcharListContainer.appendChild(Rimg);
   if (LcharListContainer) LcharListContainer.appendChild(Limg);
+});
+
+objectFiles.forEach((fileName, index) => {
+  const Bimg = document.createElement("img");
+  Bimg.src = `/images/${fileName}`;
+  Bimg.className = "Bsidebar-item sidebar-item";
+  Bimg.dataset.src = `/images/${fileName}`;
+  Bimg.alt = `BChar ${index + 1}`;
+  if (BcharListContainer) BcharListContainer.appendChild(Bimg);
 });
 
 // サイドバー関連の要素

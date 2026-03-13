@@ -129,6 +129,31 @@ const characters = [
     icon: "images/Vegeta4.png",
     url: "/Vegeta4",
   },
+  {
+    name: "アルティメット孫悟飯",
+    icon: "images/UltimateGohan.png",
+    url: "/UltimateGohan",
+  },
+  {
+    name: "ブロリー",
+    icon: "images/Burori.png",
+    url: "/Burori",
+  },
+  {
+    name: "ベジット",
+    icon: "images/Bezitto.png",
+    url: "/Bezitto",
+  },
+  {
+    name: "バーダック",
+    icon: "images/Badaku.png",
+    url: "/Badaku",
+  },
+  {
+    name: "ケフラ",
+    icon: "images/Kefura.png",
+    url: "/Kefura",
+  },
 ];
 
 const characterListContainer = document.getElementById("character-list");
